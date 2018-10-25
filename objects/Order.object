@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fields>
+        <fullName>Email__c</fullName>
+        <description>Primary Contact Email</description>
+        <externalId>false</externalId>
+        <formula>BillToContact.Email</formula>
+        <label>Email</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MDR_PID__c</fullName>
+        <description>From SAP</description>
+        <externalId>false</externalId>
+        <label>MDR PID</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Original_Order__c</fullName>
+        <deleteConstraint>SetNull</deleteConstraint>
+        <externalId>false</externalId>
+        <label>Original Order</label>
+        <referenceTo>Order</referenceTo>
+        <relationshipLabel>Orders</relationshipLabel>
+        <relationshipName>Original_Orders</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Return_Doc_number__c</fullName>
+        <description>Return Doc Number for the Order products that were returned</description>
+        <externalId>false</externalId>
+        <label>Return Doc number</label>
+        <length>18</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Sales_Doc_Number__c</fullName>
+        <description>Sales Doc number captured from SAP</description>
+        <externalId>false</externalId>
+        <label>Sales Doc Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Telephone__c</fullName>
+        <description>Primary Contact Phone number</description>
+        <externalId>false</externalId>
+        <formula>BillToContact.Phone</formula>
+        <label>Telephone</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Return_Amount__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Return Amount</label>
+        <summarizedField>OrderItem.UnitPrice</summarizedField>
+        <summaryFilterItems>
+            <field>OrderItem.UnitPrice</field>
+            <operation>notEqual</operation>
+            <value>0</value>
+        </summaryFilterItems>
+        <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>Total_Return_Item_Quantity__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Return Item Quantity</label>
+        <summarizedField>OrderItem.Quantity</summarizedField>
+        <summaryFilterItems>
+            <field>OrderItem.Quantity</field>
+            <operation>greaterThan</operation>
+            <value>0</value>
+        </summaryFilterItems>
+        <summaryForeignKey>OrderItem.OrderId</summaryForeignKey>
+        <summaryOperation>sum</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <validationRules>
+        <fullName>Return_Order_Status</fullName>
+        <active>true</active>
+        <description>Return Order cannot have Status as Activated</description>
+        <errorConditionFormula>AND(ISPICKVAL(Type, &quot;Return&quot;),  ISPICKVAL(Status, &quot;Activated&quot;)  )</errorConditionFormula>
+        <errorDisplayField>Status</errorDisplayField>
+        <errorMessage>If Order Type is Return then Order cannot be Activated</errorMessage>
+    </validationRules>
+</CustomObject>
